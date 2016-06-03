@@ -74,8 +74,8 @@ def get_data(time_interval, percentage_outliers):
     # get avg, std deviation for the data (measurement array )
     data = [x[1] for x in measurements]
     # filter out top and bottom percent of outliers 
-    bottom_outliers = [x for x in a if x<quantile(data,percentage_outliers/100)]
-    top_outliers = [x for x in a if x>=quantile(data,(1-percentage_outliers/100))]
+    bottom_outliers = [x for x in data if x<quantile(data,percentage_outliers/100)]
+    top_outliers = [x for x in data if x>=quantile(data,(1-percentage_outliers/100))]
     outliers = bottom_outliers + top_outliers
     filtered_data = [x for x in data if x not in outliers]
 
@@ -115,7 +115,7 @@ while 1:
         prev_avg = avg 
         prev_std_dev = std_dev 
         # record 
-        txt = str(now-start_time)+','+','+prev_state+','+str(diff_avg)+','+str(std_diff)+','+new_state+'\n'
+        txt = str(now-start_time)+','+','+prev_state+','+str(avg_diff)+','+str(std_diff)+','+new_state+'\n'
         prev_state = new_state 
         print txt 
         file.write(txt)
