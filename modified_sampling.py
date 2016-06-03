@@ -15,7 +15,7 @@ ECHO = 21
 GPIO.setup(TRIG,GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 file = open('log_data_change.csv','w')
-file.write('Avg,Avg_diff,Std_dev,std_dev_20sec_avg,label\n')
+file.write('time,prev_state,avg_diff, std_diff, new_state\n')
 
 file1 = open('unfiltered_data.csv','w')
 file1.write('time,distance\n')
@@ -24,7 +24,7 @@ txt =''
 txt_all = ''
 
 percentage_outliers = 5 # as a percentage 
-sleep_time = 5 
+sleep_time = 1 
 time_interval = 5 
 prev_second = int(time.time())
 now = int(time.time())
@@ -85,6 +85,8 @@ def get_data(time_interval, percentage_outliers):
 
     return mean(filtered_data),standard_deviation(filtered_data)
 
+prev_avg = 0
+prev_std_dev = 0
 while 1:
     print "Input new state that you will go to: "
     i = int(raw_input())
@@ -115,7 +117,7 @@ while 1:
         prev_avg = avg 
         prev_std_dev = std_dev 
         # record 
-        txt = str(now-start_time)+','+','+prev_state+','+str(avg_diff)+','+str(std_diff)+','+new_state+'\n'
+        txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_diff)+','+new_state+'\n'
         prev_state = new_state 
         print txt 
         file.write(txt)
