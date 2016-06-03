@@ -14,7 +14,7 @@ ECHO = 21
 GPIO.setup(TRIG,GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 
-file = open('log_data3.csv','w')
+file = open('log_data_change.csv','w')
 file.write('Avg,Avg_diff,Std_dev,std_dev_20sec_avg,label\n')
 
 file1 = open('unfiltered_data.csv','w')
@@ -24,27 +24,15 @@ txt =''
 txt_all = ''
 def get_measurements(data,second):
 
-    # print (second-1)
-
     this_second = [x for x in data if x[0] > (second-5.0)]
-    # print this_second
-
     second_data = [x[1] for x in this_second]
     median_data = median(second_data)
     filtered_data = [x for x in second_data if abs(x-median_data)/median_data < 1]
-    #for i in this_second:
-    #    print i
+
     if (len(filtered_data)<2):
         print "no data"
         return
-    #print len(filtered_data)
-    #print len(second_data)-len(filtered_data)
-    #print "Second: ",second," Avg: ", mean(filtered_data), " STD_DEV: ",standard_deviation(filtered_data)
-    # global txt
-    # txt += str(int(second))+','+str(mean(filtered_data))+','+str(standard_deviation(filtered_data))+'\n'
     return mean(filtered_data),standard_deviation(filtered_data)
-
-    # return mean(filtered_data)
 
 import thread
 def input_thread(L):
