@@ -38,10 +38,11 @@ def input_thread(L):
 def get_data(time_interval, percentage_outliers):
     """ Samples the sensor for time_interval amount of seconds and then returns information"""
     GPIO.output(TRIG,False)
-    start = time.time()
-    now = start 
+    start = int(time.time())
+    now = int(start)
     measurements = []
     while (now - start < time_interval):
+        now = int(time.time())
         time.sleep(.01)
         GPIO.output(TRIG,True)
         time.sleep(0.00001)
@@ -108,7 +109,7 @@ while 1:
     thread.start_new_thread(input_thread,(L,))
     while not L:
         now = int(time.time())
-        avg,std_dev = get_data(time_interval)
+        avg,std_dev = get_data(time_interval,percentage_outliers)
         avg_diff = avg - prev_avg 
         std_diff = std_dev - prev_std_dev
         prev_avg = avg 
