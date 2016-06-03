@@ -72,7 +72,7 @@ def get_data(time_interval, percentage_outliers):
         measurements.append([time.time() - start, distance ])
 
     # get avg, std deviation for the data (measurement array )
-    data = [x[1] for x in this_second]
+    data = [x[1] for x in measurements]
     # filter out top and bottom percent of outliers 
     bottom_outliers = [x for x in a if x<quantile(data,percentage_outliers/100)]
     top_outliers = [x for x in a if x>=quantile(data,(1-percentage_outliers/100))]
