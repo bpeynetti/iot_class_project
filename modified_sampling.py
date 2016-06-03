@@ -119,7 +119,7 @@ while 1:
         # record 
         txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_diff)+','+new_state+'\n'
         prev_state = new_state 
-        print txt 
+        print txt," - CURR AVG: ",avg 
         file.write(txt)
         time.sleep(sleep_time)
 
