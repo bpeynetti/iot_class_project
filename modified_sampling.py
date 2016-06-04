@@ -15,8 +15,12 @@ num = int(raw_input())
 states = ['chair_away','chair_close','occupied_away','occupied_close']
 TRIG = 15
 ECHO = 21
+TRIG2 = 18
+ECHO2 = 20
 GPIO.setup(TRIG,GPIO.OUT)
+GPIO.setup(TRIG2, GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
+GPIO.setup(ECHO2, GPIO.OUT)
 file = open('data/log_data_change'+str(num)+'.csv','w')
 file.write('time,prev_state,avg_diff,std_dev,std_diff, new_state\n')
 
