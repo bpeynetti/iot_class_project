@@ -45,12 +45,16 @@ def input_thread(L):
 def get_data(time_interval, percentage_outliers):
     """ Samples the sensor for time_interval amount of seconds and then returns information"""
     GPIO.output(TRIG,False)
+    GPIO.output(TRIG2,False)
     start = int(time.time())
     now = int(start)
     measurements = []
+    measurements2 = []
     while (now - start < time_interval):
         now = int(time.time())
         time.sleep(.01)
+
+        # GET DISTANCE 
         GPIO.output(TRIG,True)
         time.sleep(0.00001)
         GPIO.output(TRIG,False)
@@ -72,11 +76,39 @@ def get_data(time_interval, percentage_outliers):
         if flag==True:
             continue
 
+        # GET HEIGHT
+        GPIO.output(TRIG2,True)
+        time.sleep(0.00001)
+        GPIO.output(TRIG2,False)
+        start_listen_2 = time.time()
+        flag = False
+        while GPIO.input(ECHO2) == 0:
+            pulse_start2 = time.time()
+            if (pulse_start2 - start_listen_2)>.01:
+                flag = True
+                break
+        if (flag==True):
+            continue
+        start_listen_3 = time.time()
+        while GPIO.input(ECHO2) == 1:
+            pulse_end2 = time.time()
+            if (pulse_end2 - start_listen_3)>0.01:
+                flag = True
+                break
+        if flag==True:
+            continue
+            
+
         pulse_dur = pulse_end - pulse_start
+        pulse_dur2 = pulse_end2 - pulse_start2 
         distance = pulse_dur * 17150
+        distance2 = pulse_dur2 * 17150 
         if (distance>200):
             continue
         measurements.append([time.time() - start, distance ])
+        measurements2.append([time.time() - start, distance2])
+
+    # FOR DISTANCE 
 
     # get avg, std deviation for the data (measurement array )
     data = [x[1] for x in measurements]
@@ -86,14 +118,28 @@ def get_data(time_interval, percentage_outliers):
     outliers = bottom_outliers + top_outliers
     filtered_data = [x for x in data if x not in outliers]
 
+    # FOR HEIGHT 
+    data2 = [x[1] for x in measurements2]
+    # filter out top and bottom percent of outliers 
+    bottom_outliers2 = [x for x in data2 if x<quantile(data,percentage_outliers/100)]
+    top_outliers2 = [x for x in data2 if x>=quantile(data,(1-percentage_outliers/100))]
+    outliers2 = bottom_outliers2 + top_outliers2
+    filtered_data2 = [x for x in data2 if x not in outliers2]
+
     if (len(filtered_data)<2):
         print "no data"
         return
 
-    return mean(filtered_data),standard_deviation(filtered_data)
+    return mean(filtered_data),standard_deviation(filtered_data),mean(filtered_data2),standard_deviation(filtered_data2)
 
 prev_avg = 0
+prev_avgH = 0 
 prev_std_dev = 0
+prev_std_devH = 0
+avg_diff = 0 
+avg_diffH = 0 
+std_diff = 0 
+std_diffH = 0 
 while 1:
     print "Input new state that you will go to: "
     i = int(raw_input())
@@ -118,14 +164,21 @@ while 1:
     #thread.start_new_thread(input_thread,(L,))
     for i in range(2):
         now = int(time.time())
-        avg,std_dev = get_data(time_interval,percentage_outliers)
+        avg,std_dev, avgH, std_devH = get_data(time_interval,percentage_outliers)
+        # DISTANCE 
         avg_diff = avg - prev_avg 
         std_diff = std_dev - prev_std_dev
         prev_avg = avg 
         prev_std_dev = std_dev 
+        # HEIGHT 
+        avg_diffH = avgH - prev_avgH
+        std_diffH = std_devH - prev_std_devH 
+        prev_avgH = avgH 
+        prev_std_dev = std_devH 
+
         # record 
-        txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+new_state+'\n'
-        print  str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+new_state+" - CURR AVG: ",avg 
+        txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+str(avgH)+','+str(avg_diffH)+','+str(std_devH)+','+str(std_diffH)+','+new_state+'\n'
+        print txt
         prev_state = new_state
         file.write(txt)
         time.sleep(sleep_time)
