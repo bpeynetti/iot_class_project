@@ -9,13 +9,16 @@ import thread
 from useful_fn import *
 GPIO.setmode(GPIO.BCM)
 
+print "Set file number"
+num = int(raw_input())
+
 states = ['chair_away','chair_close','occupied_away','occupied_close']
 TRIG = 15
 ECHO = 21
 GPIO.setup(TRIG,GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
-file = open('log_data_change.csv','w')
-file.write('time,prev_state,avg_diff, std_diff, new_state\n')
+file = open('data/log_data_change'+str(num)+'.csv','w')
+file.write('time,prev_state,avg_diff,std_dev,std_diff, new_state\n')
 
 file1 = open('unfiltered_data.csv','w')
 file1.write('time,distance\n')
@@ -23,9 +26,9 @@ file1.write('time,distance\n')
 txt =''
 txt_all = ''
 
-percentage_outliers = 5 # as a percentage 
+percentage_outliers = 10 # as a percentage 
 sleep_time = 1 
-time_interval = 5 
+time_interval = 10
 prev_second = int(time.time())
 now = int(time.time())
 start_time = int(time.time())
@@ -107,9 +110,9 @@ while 1:
     print 1 
     time.sleep(1)
     print "MEASURING"
-    L = []
-    thread.start_new_thread(input_thread,(L,))
-    while not L:
+    #L = []
+    #thread.start_new_thread(input_thread,(L,))
+    for i in range(4):
         now = int(time.time())
         avg,std_dev = get_data(time_interval,percentage_outliers)
         avg_diff = avg - prev_avg 
@@ -117,9 +120,9 @@ while 1:
         prev_avg = avg 
         prev_std_dev = std_dev 
         # record 
-        txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_diff)+','+new_state+'\n'
-        prev_state = new_state 
-        print txt," - CURR AVG: ",avg 
+        txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+new_state+'\n'
+        print  str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+new_state+" - CURR AVG: ",avg 
+        prev_state = new_state
         file.write(txt)
         time.sleep(sleep_time)
 
