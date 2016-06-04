@@ -7,6 +7,7 @@ import random
 import math
 import thread
 from useful_fn import *
+from classifier import *
 GPIO.setmode(GPIO.BCM)
 
 print "Set file number"
@@ -174,10 +175,14 @@ while 1:
         avg_diffH = avgH - prev_avgH
         std_diffH = std_devH - prev_std_devH 
         prev_avgH = avgH 
-        prev_std_dev = std_devH 
+        prev_std_devH = std_devH 
+
+        predicted_state = get_new_state(states.index(prev_state), avg_diff, avgH)
 
         # record 
-        txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+str(avgH)+','+str(avg_diffH)+','+str(std_devH)+','+str(std_diffH)+','+new_state+'\n'
+        #this is the old version of the printing text
+        #txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+str(avgH)+','+str(avg_diffH)+','+str(std_devH)+','+str(std_diffH)+','+new_state+'\n'
+        txt = str(now-start_time) + ',' + prev_state + ',' + str(states.index(prev_state)) + ',' + new_state + ',' + str(states.index(new_state)) + ',' + str(avg_diff) + ',' + str(avgH) + ',' + str(predicted_state)
         print txt
         prev_state = new_state
         file.write(txt)
