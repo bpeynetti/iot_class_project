@@ -112,7 +112,7 @@ while 1:
     print "MEASURING"
     #L = []
     #thread.start_new_thread(input_thread,(L,))
-    for i in range(4):
+    for i in range(2):
         now = int(time.time())
         avg,std_dev = get_data(time_interval,percentage_outliers)
         avg_diff = avg - prev_avg 
