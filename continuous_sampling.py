@@ -43,7 +43,7 @@ now = int(time.time())
 start_time = int(time.time())
 prev_state = states[0]
 
-def send_data():
+def send_data(allStates):
     """ thread that continuously polls and sends data whenenver the time is right """
 
     send_interval = 5
@@ -185,7 +185,7 @@ std_diff = 0
 std_diffH = 0 
 allStates = []
 allStates.append(0)
-thread.start_new_thread(send_data)
+thread.start_new_thread(send_data,(allStates,))
 while 1:
     print "Input new state that you will go to: "
     i = int(raw_input())
