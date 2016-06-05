@@ -36,8 +36,8 @@ txt =''
 txt_all = ''
 
 percentage_outliers = 10 # as a percentage 
-sleep_time = 1#2#5#i1 
-time_interval = 5#8#15#0#7
+sleep_time = 1 
+time_interval = 5
 prev_second = int(time.time())
 now = int(time.time())
 start_time = int(time.time())
@@ -47,7 +47,7 @@ def send_data(allStates):
     """ thread that continuously polls and sends data whenenver the time is right """
 
 
-    send_interval = 20#10
+    send_interval = 15
     # send the first element 
     f.add_state(0,True)
     f.add_state(0,False) 

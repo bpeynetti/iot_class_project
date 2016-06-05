@@ -15,12 +15,20 @@ var transitionGraph = $('#transition_graph');
 
 
 // STATE: 2 = empty, 3 = occupied
-
+// function initializeGraph(graph_obj,type){
+//
+//
+//
+// }
+// updateGraph()
 
 intervalRef.on('value',function(snapshot){
 
   var userid = 0;
   var data = snapshot.val(); // in object form
+  if(!data) {
+     return;
+   }
   console.log(data);
   var data_array = []
   snapshot.forEach(function(childSnap){
@@ -32,7 +40,7 @@ intervalRef.on('value',function(snapshot){
   state_interval.text(data[data.length-1].state);
 
   last_state = data[data.length-1].state;
-  if (last_state===0 | last_state==="empty")
+  if (last_state<=1 | last_state==="empty")
   {
     addEvent(0,2);
   }
@@ -46,6 +54,9 @@ intervalRef.on('value',function(snapshot){
 transitionRef.on('value',function(snapshot){
 
   var data = snapshot.val();
+  if(!data){
+     return;
+   }
   var data_array = []
   snapshot.forEach(function(childSnap){
     data_array.push(childSnap.val());
@@ -55,7 +66,7 @@ transitionRef.on('value',function(snapshot){
   state_transition.text(data[data.length-1].state);
 
   last_state = data[data.length-1].state;
-  if (last_state===0 | last_state==="empty")
+  if (last_state<=1 | last_state==="empty")
   {
     addEvent(1,2);
   }
@@ -198,12 +209,12 @@ function random(name) {
     return context.metric(function (start, stop, step, callback) {
         start = +start, stop = +stop;
         if (isNaN(last)) last = start;
-        console.log(step);
-        console.log(name);
-        console.log(values);
+        // console.log(step);
+        // console.log(name);
+        // console.log(values);
         while (last < stop) {
             last += step;
-            console.log(last);
+            // console.log(last);
             for (var j = 0; j < Users.length; j++) { //For all users
                 if (Users[j].name == name) { //If the user name in the loop matches the current user name
                     if (Users[j].newevent) { //If the user has a new event
@@ -216,7 +227,7 @@ function random(name) {
                 }
             }
         }
-        console.log(values);
+        // console.log(values);
         callback(null, values = values.slice((start - stop) / step)); //And execute the callback function
     }, name);
 }
