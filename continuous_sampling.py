@@ -178,9 +178,10 @@ def get_data(time_interval, percentage_outliers):
     else:
         filtered_data2 = data2
 
-    if (len(filtered_data)<2):
+    if (len(filtered_data)<2) or len(filtered_data2)<2:
         print "no data"
-        return mean(filtered_data),0,mean(filtered_data2),0
+        return mean(data),0,mean(data2),0
+
 
     return mean(filtered_data),standard_deviation(filtered_data),mean(filtered_data2),standard_deviation(filtered_data2)
 
