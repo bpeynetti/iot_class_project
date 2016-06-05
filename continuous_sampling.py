@@ -43,10 +43,8 @@ now = int(time.time())
 start_time = int(time.time())
 prev_state = states[0]
 
-def send_data(allStates):
+def send_data(l):
     """ thread that continuously polls and sends data whenenver the time is right """
-
-
     send_interval = 15
     # send the first element 
     f.add_state(0,True)
@@ -57,7 +55,7 @@ def send_data(allStates):
     last_time_sent = start_sending
 
     print "STARTING COMMM THREAD"
-    while not L:
+    while 1:
         if len(allStates)<1:
             continue
         if allStates[-1]!=last_stable:
@@ -69,16 +67,11 @@ def send_data(allStates):
 
         now = time.time()
         if (now - last_time_sent > send_interval):
-            print "SENDING INTERVAL READING",last_stable,allStates[-3:]
+            print "SENDING INTERVAL READING",last_stable,allStates[-3:],"("+len(allStates)+")"
             f.add_state(last_stable,True)
-	    last_time_sent = now
+        last_time_sent = now
 
 
-
-
-def input_thread(L):
-    raw_input()
-    L.append(None)
 
 newState = 0 
 def restart_fsm(initalize):
@@ -211,28 +204,9 @@ allStates = []
 allStates.append(0)
 stable = 0
 initialize = False
-thread.start_new_thread(send_data,(allStates,))
+l=1
+thread.start_new_thread(send_data,(l,))
 while 1:
-    # print "Input new state that you will go to: "
-    # i = int(raw_input())
-    # while (i>=4):
-    #     i = int(raw_input())
-    # if (i<0):
-    #     break
-    # new_state = states[i]
-    # print "WAIT FOR START, THEN MOVE TO STATE:",new_state
-    # print 5 
-    # time.sleep(1)
-    # print 4
-    # time.sleep(1)
-    # print 3 
-    # time.sleep(1)
-    # print 2 
-    # time.sleep(1)
-    # print 1 
-    # time.sleep(1)
-    # print "MEASURING"
-
     thread.start_new_thread(restart_fsm,(initialize,))
     start = True
     initialize = False 
