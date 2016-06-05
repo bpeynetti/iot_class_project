@@ -14,7 +14,9 @@ def get_new_state(state, sensor1_difference,sensor1_distance, sensor2_distance, 
                         return 2
         else:
         	if state == 0:
-        		if sensor1_difference > -10:
+                        if (sensor2_distance < 20 and sensor1_difference > -10):
+                                return 2
+        		elif sensor1_difference > -10:
         			return 0
         		elif sensor1_difference > -45 and (sensor2_distance < 20 or sensor2_distance > 50):
         			return 2

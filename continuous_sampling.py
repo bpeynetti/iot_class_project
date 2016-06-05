@@ -211,6 +211,7 @@ allStates = []
 allStates.append(0)
 stable = 0
 initialize = False
+thread.start_new_thread(send_data,(allStates,))
 while 1:
     # print "Input new state that you will go to: "
     # i = int(raw_input())
@@ -232,14 +233,10 @@ while 1:
     # time.sleep(1)
     # print "MEASURING"
 
-
-    L = []
-    thread.start_new_thread(input_thread,(L,))
     thread.start_new_thread(restart_fsm,(initialize,))
-    thread.start_new_thread(send_data,(allStates,))
-
     start = True
     initialize = False 
+    print "Restarting "
     while not initialize:
         now = int(time.time())
         avg,std_dev, avgH, std_devH = get_data(time_interval,percentage_outliers)
