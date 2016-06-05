@@ -170,9 +170,9 @@ while 1:
     time.sleep(1)
     print "MEASURING"
 
-    #L = []
-    #thread.start_new_thread(input_thread,(L,))
-    for i in range(2):
+    L = []
+    thread.start_new_thread(input_thread,(L,))
+    while not L:
         now = int(time.time())
         avg,std_dev, avgH, std_devH = get_data(time_interval,percentage_outliers)
         # DISTANCE 
@@ -186,14 +186,14 @@ while 1:
         prev_avgH = avgH 
         prev_std_devH = std_devH 
 
-        predicted_state = get_new_state(states.index(prev_state), avg_diff, avgH)
+        predicted_state = get_new_state(states.index(prev_state), avg_diff, avgH, std_dev)
 
         # record 
         #this is the old version of the printing text
         #txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+str(avgH)+','+str(avg_diffH)+','+str(std_devH)+','+str(std_diffH)+','+new_state+'\n'
-        txt = str(now-start_time) + ',' + prev_state + ',' + str(states.index(prev_state)) + ',' + new_state + ',' + str(states.index(new_state)) + ',' + str(avg_diff) + ',' + str(avgH) + ',' + str(predicted_state)
+        txt = str(now-start_time) + ',' + prev_state + ',' + str(states.index(prev_state)) + ',' + new_state + ',' + str(states.index(new_state)) + ',' + str(avg_diff) + ',' + str(avgH) +','+str(std_dev)+',' + str(predicted_state)
         print txt.strip()
-        prev_state = new_state
+        prev_state = states[predicted_state]
         file.write(txt)
         time.sleep(sleep_time)
 

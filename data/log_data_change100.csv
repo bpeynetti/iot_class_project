@@ -1,0 +1,2 @@
+time,prev_state,avg_diff,std_dev,std_diff, new_state
+8,chair_away,0,chair_close,1,51.7596451566,24.7969279315,016,chair_close,1,chair_close,1,0.0263670680694,24.8984651997,132,chair_close,1,occupied_away,2,10.8686505242,16.5209108626,240,occupied_away,2,occupied_away,2,-1.28107318666,16.5687713808,256,occupied_away,2,occupied_close,3,-13.8609834183,13.6723269463,264,occupied_close,3,occupied_close,3,-0.430838505011,11.2019134195,3156,occupied_close,3,chair_away,0,42.8130830829,68.6061225879,2164,chair_away,0,chair_away,0,-0.10133758656,68.6475505431,0

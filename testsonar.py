@@ -4,14 +4,14 @@ GPIO.cleanup()
 GPIO.setmode(GPIO.BCM)
 
 TRIG = 18
-ECHO = 21
+ECHO = 20
 
 print "distance measurement in progress"
 GPIO.setup(TRIG,GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 GPIO.output(TRIG,False)
 time.sleep(2)
-for i in range(100):
+for i in range(1000):
     time.sleep(.1)
     GPIO.output(TRIG,True)
     time.sleep(0.00001)
