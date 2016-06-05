@@ -46,17 +46,18 @@ prev_state = states[0]
 def send_data(allStates):
     """ thread that continuously polls and sends data whenenver the time is right """
 
-    send_interval = 5
+    send_interval = 10#5
     # send the first element 
-    f.add_state(states[0],True)
-    f.add_state(states[0],False)
+    #f.add_state(states[0],True)
+    #f.add_state(states[0],False)
+    f.add_state(0,True)
+    f.add_state(0,False) 
     last_stable = 0 
 
     start_sending = time.time()
     last_time_sent = start_sending
-
+    print "START COMM THREAD"
     while 1:
-        print "STARTING COMMM THREAD"
         if len(allStates)<1:
             continue
         if allStates[-1]!=last_stable:
@@ -70,7 +71,7 @@ def send_data(allStates):
         if (now - last_time_sent > send_interval):
             print "SENDING INTERVAL READING"
             f.add_state(last_stable,True)
-
+	    last_time_sent = now
 
 
 
