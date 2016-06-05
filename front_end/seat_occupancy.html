@@ -23,10 +23,18 @@
   <link rel='stylesheet' href='style.css'>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>  
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+
+<script src="http://square.github.io/cubism/d3.v2.js"></script>
+<script src="http://square.github.io/cubism/cubism.v1.js"></script>
+<script src="http://square.github.io/cubism/highlight.min.js"></script>
+<!-- <script src="discrete-cubism.js"></script> -->
+
+
 </head>
 
 <body>
+
   <div class="container">
     <div class='jumbotron'>
       <h1> Seat Occupancy Detection via Ultrasonic Sensors </h1>
@@ -39,10 +47,6 @@
         <div class='col-sm-3'>
           Number of readings:
           <div class='num-readings' id='number_readings_interval'></div>
-        </div>
-        <div class='col-sm-6 graph-space'>
-          <div id='graph_interval'></div>
-          GRAPH
         </div>
         <div class='col-sm-3'> STATE
           <div class='state-name' id='state_interval'></div>
@@ -58,16 +62,17 @@
           Number of readings:
           <div class='num-readings' id='number_readings_transition'></div>
         </div>
-        <div class='col-sm-6 graph-space'>
-          <div id='graph_transition'></div>
-          GRAPH
-        </div>
         <div class='col-sm-3'> STATE
           <div class='state-name' id='state_transition'></div>
         </div>
       </div>
     </div>
   </div>
+  <div id="example1"></div>
+
+
+
+
 
   <script src='seat_occupancy.js'></script>
 </body>

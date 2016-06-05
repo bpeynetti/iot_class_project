@@ -46,22 +46,22 @@ prev_state = states[0]
 def send_data(allStates):
     """ thread that continuously polls and sends data whenenver the time is right """
 
-    send_interval = 10#5
+
+    send_interval = 10
     # send the first element 
-    #f.add_state(states[0],True)
-    #f.add_state(states[0],False)
     f.add_state(0,True)
     f.add_state(0,False) 
     last_stable = 0 
 
     start_sending = time.time()
     last_time_sent = start_sending
-    print "START COMM THREAD"
-    while 1:
+
+    print "STARTING COMMM THREAD"
+    while not L:
         if len(allStates)<1:
             continue
         if allStates[-1]!=last_stable:
-            print "STATE CHANGED: ",allStates[-1]
+            # print "STATE CHANGED: ",allStates[-1]
             if (allStates[-1]==allStates[-2]):
                 print "NEW STATE STABLE, SENDING TRANSITION READING"
                 last_stable = allStates[-1]
@@ -72,6 +72,7 @@ def send_data(allStates):
             print "SENDING INTERVAL READING"
             f.add_state(last_stable,True)
 	    last_time_sent = now
+
 
 
 
@@ -186,7 +187,7 @@ std_diff = 0
 std_diffH = 0 
 allStates = []
 allStates.append(0)
-thread.start_new_thread(send_data,(allStates,))
+stable = 0
 while 1:
     print "Input new state that you will go to: "
     i = int(raw_input())
@@ -210,6 +211,7 @@ while 1:
 
     L = []
     thread.start_new_thread(input_thread,(L,))
+    thread.start_new_thread(send_data,(allStates,))
     while not L:
         now = int(time.time())
         avg,std_dev, avgH, std_devH = get_data(time_interval,percentage_outliers)
