@@ -235,7 +235,7 @@ while 1:
 
     L = []
     thread.start_new_thread(input_thread,(L,))
-    thread.start_new_thread(restart_fsm,(initalize,))
+    thread.start_new_thread(restart_fsm,(initialize,))
     thread.start_new_thread(send_data,(allStates,))
 
     start = True
@@ -263,7 +263,7 @@ while 1:
         # record 
         #this is the old version of the printing text
         #txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+str(avgH)+','+str(avg_diffH)+','+str(std_devH)+','+str(std_diffH)+','+new_state+'\n'
-        txt = str(now-start_time) + ',' + prev_state + ',' + str(states.index(prev_state)) + ',' + new_state + ',' + str(states.index(new_state)) + ',' + str(avg_diff) + ',' + str(avgH) +','+str(std_dev)+',' + str(predicted_state)
+        txt = str(now-start_time) + ',' + prev_state + ',' + str(states.index(prev_state)) +',' + str(avg_diff) +','+str(avg)+ ',' + str(avgH) +','+str(std_dev)+',' + str(predicted_state)
         print txt.strip()
         prev_state = states[predicted_state]
         file.write(txt)
