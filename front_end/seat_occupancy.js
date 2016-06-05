@@ -37,17 +37,20 @@ intervalRef.on('value',function(snapshot){
   data = data_array;
   console.log(data)
   num_interval.text(data.length);
-  state_interval.text(data[data.length-1].state);
 
   last_state = data[data.length-1].state;
   if (last_state<=1 | last_state==="empty")
   {
     addEvent(0,2);
+    chair = 'empty'
   }
   else
   {
     addEvent(0,3);
+    chair = 'occupied'
   }
+  state_interval.text(chair);
+
 });
 
 
@@ -63,17 +66,19 @@ transitionRef.on('value',function(snapshot){
   })
   data = data_array;
   num_transition.text(data.length);
-  state_transition.text(data[data.length-1].state);
 
   last_state = data[data.length-1].state;
   if (last_state<=1 | last_state==="empty")
   {
     addEvent(1,2);
+    chair = 'empty'
   }
   else
   {
     addEvent(1,3);
+    chair = 'occupied'
   }
+  state_transition.text(chair);
 
 });
 
@@ -141,7 +146,7 @@ events.push({ //Create a couple of events
 var context = cubism.context() // set the cubism context
 .serverDelay(0) // No server delay
 .clientDelay(0) // No client delay
-.step(1e3) // step once every second
+.step(2.5e2) // step once every second
 .size(1000); // and make the horizon div 960 px wide.
 
 //////////////////////////////////////////////////

@@ -69,7 +69,7 @@ def send_data(allStates):
 
         now = time.time()
         if (now - last_time_sent > send_interval):
-            print "SENDING INTERVAL READING"
+            print "SENDING INTERVAL READING",last_stable,allStates[-3:]
             f.add_state(last_stable,True)
 	    last_time_sent = now
 
@@ -79,6 +79,20 @@ def send_data(allStates):
 def input_thread(L):
     raw_input()
     L.append(None)
+
+newState = 0 
+def initialize_thread(initalize):
+    global newState
+    newState = int(raw_input())
+    if (newState<0):
+        print "FINISHING!"
+    while (newState>3):
+        print "WRONG STATE TRY AGAIN"
+        newState = int(raw_input())
+
+    initialize = True
+
+
 
 def get_data(time_interval, percentage_outliers):
     """ Samples the sensor for time_interval amount of seconds and then returns information"""
@@ -196,31 +210,37 @@ std_diffH = 0
 allStates = []
 allStates.append(0)
 stable = 0
+initialize = False
 while 1:
-    print "Input new state that you will go to: "
-    i = int(raw_input())
-    while (i>=4):
-        i = int(raw_input())
-    if (i<0):
-        break
-    new_state = states[i]
-    print "WAIT FOR START, THEN MOVE TO STATE:",new_state
-    print 5 
-    time.sleep(1)
-    print 4
-    time.sleep(1)
-    print 3 
-    time.sleep(1)
-    print 2 
-    time.sleep(1)
-    print 1 
-    time.sleep(1)
-    print "MEASURING"
+    # print "Input new state that you will go to: "
+    # i = int(raw_input())
+    # while (i>=4):
+    #     i = int(raw_input())
+    # if (i<0):
+    #     break
+    # new_state = states[i]
+    # print "WAIT FOR START, THEN MOVE TO STATE:",new_state
+    # print 5 
+    # time.sleep(1)
+    # print 4
+    # time.sleep(1)
+    # print 3 
+    # time.sleep(1)
+    # print 2 
+    # time.sleep(1)
+    # print 1 
+    # time.sleep(1)
+    # print "MEASURING"
+
 
     L = []
     thread.start_new_thread(input_thread,(L,))
+    thread.start_new_thread(restart_fsm,(initalize,))
     thread.start_new_thread(send_data,(allStates,))
-    while not L:
+
+    start = True
+    initialize = False 
+    while not initialize:
         now = int(time.time())
         avg,std_dev, avgH, std_devH = get_data(time_interval,percentage_outliers)
         # DISTANCE 
@@ -234,7 +254,8 @@ while 1:
         prev_avgH = avgH 
         prev_std_devH = std_devH 
 
-        predicted_state = get_new_state(states.index(prev_state), avg_diff, avgH, std_dev)
+        predicted_state = get_new_state(states.index(prev_state), avg_diff ,avg, avgH, std_dev,start)
+        start = False
         allStates.append(predicted_state)
         if (len(allStates)>100):
             allStates = allStates[-100:]
