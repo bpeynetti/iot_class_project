@@ -1,0 +1,28 @@
+{
+  "intervals" : [ null, {
+    "state" : "chair_away",
+    "timestamp" : 0
+  }, {
+    "state" : "chair_away",
+    "timestamp" : 1
+  }, {
+    "state" : "chair_away",
+    "timestamp" : 2
+  }, {
+    "state" : "chair_away",
+    "timestamp" : 3
+  }, {
+    "state" : "chair_away",
+    "timestamp" : 4
+  }, {
+    "state" : "occupied_away",
+    "timestamp" : 6
+  } ],
+  "transitions" : [ null, {
+    "state" : "chair_away",
+    "timestamp" : 0
+  }, {
+    "state" : "chair_close",
+    "timestamp" : 4
+  } ]
+}

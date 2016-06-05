@@ -9,7 +9,10 @@ import thread
 from useful_fn import *
 from classifier import *
 GPIO.setmode(GPIO.BCM)
+from firebase1 import Firebase
+from myfirebase import * 
 
+f = FirebaseClass()
 
 print "Set file number"
 num = int(raw_input())
@@ -187,7 +190,7 @@ while 1:
         prev_std_devH = std_devH 
 
         predicted_state = get_new_state(states.index(prev_state), avg_diff, avgH, std_dev)
-
+        f.add_state(states[predicted_state])
         # record 
         #this is the old version of the printing text
         #txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+str(avgH)+','+str(avg_diffH)+','+str(std_devH)+','+str(std_diffH)+','+new_state+'\n'
