@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Seat Occupancy Detection Wtih Ultrasonic Sensors</title>
+  <meta name="author" content="SitePoint">
+
+  <!-- JQuery  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <!-- BOOTSTRAP  -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+  <!-- JQuery  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <!--  FIREBASE  -->
+  <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+  <link rel='stylesheet' href='style.css'>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>  
+</head>
+
+<body>
+  <div class="container">
+    <div class='jumbotron'>
+      <h1> Seat Occupancy Detection via Ultrasonic Sensors </h1>
+    </div>
+    <div class='row data-type'>
+      <div class='col-sm-12'>
+        <h3> Interval  </h3>
+      </div>
+      <div class='row data-info'>
+        <div class='col-sm-3'>
+          Number of readings:
+          <div class='num-readings' id='number_readings_interval'></div>
+        </div>
+        <div class='col-sm-6 graph-space'>
+          <div id='graph_interval'></div>
+          GRAPH
+        </div>
+        <div class='col-sm-3'> STATE
+          <div class='state-name' id='state_interval'></div>
+        </div>
+      </div>
+    </div>
+    <div class='row data-type'>
+      <div class='col-sm-12'>
+        <h3> State transition  </h3>
+      </div>
+      <div class='row data-info'>
+        <div class='col-sm-3'>
+          Number of readings:
+          <div class='num-readings' id='number_readings_transition'></div>
+        </div>
+        <div class='col-sm-6 graph-space'>
+          <div id='graph_transition'></div>
+          GRAPH
+        </div>
+        <div class='col-sm-3'> STATE
+          <div class='state-name' id='state_transition'></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src='seat_occupancy.js'></script>
+</body>
+</html>

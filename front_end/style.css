@@ -1,0 +1,30 @@
+body {
+  text-align:center;
+  height:500px;
+}
+.container {
+  height: 50%;
+}
+
+.graph-space {
+  background-color: #777777;
+  height: 100%;
+}
+
+.data-type {
+  height:40%;
+}
+
+.num-readings {
+  font-size:3em;
+  font-weight:bold;
+}
+
+.data-info {
+  height:100%;
+}
+
+.state-name {
+  font-size: 3em;
+  font-weight:bold;
+}
