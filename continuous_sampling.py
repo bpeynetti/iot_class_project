@@ -185,6 +185,7 @@ std_diff = 0
 std_diffH = 0 
 allStates = []
 allStates.append(0)
+thread.start_new_thread(send_data)
 while 1:
     print "Input new state that you will go to: "
     i = int(raw_input())
