@@ -158,22 +158,29 @@ def get_data(time_interval, percentage_outliers):
     # get avg, std deviation for the data (measurement array )
     data = [x[1] for x in measurements]
     # filter out top and bottom percent of outliers 
-    bottom_outliers = [x for x in data if x<quantile(data,percentage_outliers/100)]
-    top_outliers = [x for x in data if x>=quantile(data,(1-percentage_outliers/100))]
-    outliers = bottom_outliers + top_outliers
-    filtered_data = [x for x in data if x not in outliers]
+    if standard_deviation(data)>.05:
+        bottom_outliers = [x for x in data if x<quantile(data,percentage_outliers/100)]
+        top_outliers = [x for x in data if x>=quantile(data,(1-percentage_outliers/100))]
+        outliers = bottom_outliers + top_outliers
+        filtered_data = [x for x in data if x not in outliers]
+    else:
+        filtered_data = data 
+    
 
     # FOR HEIGHT 
     data2 = [x[1] for x in measurements2]
-    # filter out top and bottom percent of outliers 
-    bottom_outliers2 = [x for x in data2 if x<quantile(data2,percentage_outliers/100)]
-    top_outliers2 = [x for x in data2 if x>=quantile(data2,(1-percentage_outliers/100))]
-    outliers2 = bottom_outliers2 + top_outliers2
-    filtered_data2 = [x for x in data2 if x not in outliers2]
+    if standard_deviation(data2)>.05:
+        # filter out top and bottom percent of outliers 
+        bottom_outliers2 = [x for x in data2 if x<quantile(data2,percentage_outliers/100)]
+        top_outliers2 = [x for x in data2 if x>=quantile(data2,(1-percentage_outliers/100))]
+        outliers2 = bottom_outliers2 + top_outliers2
+        filtered_data2 = [x for x in data2 if x not in outliers2]
+    else:
+        filtered_data2 = data2
 
     if (len(filtered_data)<2):
         print "no data"
-        return
+        return mean(filtered_data),0,mean(filtered_data2),0
 
     return mean(filtered_data),standard_deviation(filtered_data),mean(filtered_data2),standard_deviation(filtered_data2)
 
