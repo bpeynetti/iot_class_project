@@ -81,7 +81,7 @@ def input_thread(L):
     L.append(None)
 
 newState = 0 
-def initialize_thread(initalize):
+def restart_fsm(initalize):
     global newState
     newState = int(raw_input())
     if (newState<0):
