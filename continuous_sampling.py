@@ -66,10 +66,11 @@ def send_data(l):
                 f.add_state(last_stable,False)
 
         now = time.time()
+        #print (now - last_time_sent) 
         if (now - last_time_sent > send_interval):
-            print "SENDING INTERVAL READING",last_stable,allStates[-3:],"("+len(allStates)+")"
+            print "SENDING INTERVAL READING",last_stable,allStates[-3:],"("+str(len(allStates))+")"
             f.add_state(last_stable,True)
-        last_time_sent = now
+            last_time_sent = now
 
 
 
