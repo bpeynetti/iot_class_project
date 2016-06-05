@@ -56,7 +56,9 @@ def send_data():
     last_time_sent = start_sending
 
     while 1:
-        
+        print "STARTING COMMM THREAD"
+        if len(allStates)<1:
+            continue
         if allStates[-1]!=last_stable:
             print "STATE CHANGED: ",allStates[-1]
             if (allStates[-1]==allStates[-2]):
@@ -181,6 +183,8 @@ avg_diff = 0
 avg_diffH = 0 
 std_diff = 0 
 std_diffH = 0 
+allStates = []
+allStates.append(0)
 while 1:
     print "Input new state that you will go to: "
     i = int(raw_input())
