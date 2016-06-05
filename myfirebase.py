@@ -13,5 +13,5 @@ class FirebaseClass(object):
             childFb = self.fb.child('/intervals')
         else:
             childFb = self.fb.child('/transitions')
-        elapsed_time = time.time() - self.start 
+        elapsed_time = time.time();# - self.start 
         childFb.push({'timestamp': elapsed_time, 'state': state})

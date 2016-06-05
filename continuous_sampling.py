@@ -43,6 +43,35 @@ now = int(time.time())
 start_time = int(time.time())
 prev_state = states[0]
 
+def send_data():
+    """ thread that continuously polls and sends data whenenver the time is right """
+
+    send_interval = 5
+    # send the first element 
+    f.add_state(states[0],True)
+    f.add_state(states[0],False)
+    last_stable = 0 
+
+    start_sending = time.time()
+    last_time_sent = start_sending
+
+    while 1:
+        
+        if allStates[-1]!=last_stable:
+            print "STATE CHANGED: ",allStates[-1]
+            if (allStates[-1]==allStates[-2]):
+                print "NEW STATE STABLE, SENDING TRANSITION READING"
+                last_stable = allStates[-1]
+                f.add_state(last_stable,False)
+
+        now = time.time()
+        if (now - last_time_sent > send_interval):
+            print "SENDING INTERVAL READING"
+            f.add_state(last_stable,True)
+
+
+
+
 def input_thread(L):
     raw_input()
     L.append(None)
@@ -190,7 +219,10 @@ while 1:
         prev_std_devH = std_devH 
 
         predicted_state = get_new_state(states.index(prev_state), avg_diff, avgH, std_dev)
-        f.add_state(states[predicted_state])
+        allStates.append(predicted_state)
+        if (len(allStates)>100):
+            allStates = allStates[-100:]
+        # f.add_state(states[predicted_state])
         # record 
         #this is the old version of the printing text
         #txt = str(now-start_time)+','+prev_state+','+str(avg_diff)+','+str(std_dev)+','+str(std_diff)+','+str(avgH)+','+str(avg_diffH)+','+str(std_devH)+','+str(std_diffH)+','+new_state+'\n'
