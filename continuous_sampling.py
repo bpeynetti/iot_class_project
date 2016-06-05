@@ -89,7 +89,7 @@ def restart_fsm(initalize):
     while (newState>3):
         print "WRONG STATE TRY AGAIN"
         newState = int(raw_input())
-
+    global initialize
     initialize = True
 
 
