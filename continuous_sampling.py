@@ -79,7 +79,9 @@ def restart_fsm(initalize):
 
     while 1:
         # start = time.time()
-        time.sleep(10)
+        time.sleep(100)
+        print "HI!"
+        global initialize 
         initialize = True
         # while (time.time() - start < 15):
     # global newState
