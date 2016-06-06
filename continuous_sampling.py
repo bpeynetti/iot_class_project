@@ -215,8 +215,8 @@ stable = 0
 initialize = False
 l=1
 thread.start_new_thread(send_data,(l,))
+thread.start_new_thread(restart_fsm,(initialize,))
 while 1:
-    thread.start_new_thread(restart_fsm,(initialize,))
     start = True
     initialize = False 
     print "Restarting "

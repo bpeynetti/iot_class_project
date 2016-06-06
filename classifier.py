@@ -6,9 +6,9 @@ def get_new_state(state, sensor1_difference,sensor1_distance, sensor2_distance, 
         if (startBool == True):
                 if sensor2_distance < 50 and sensor2_distance>20:
                         return 1 
-                elif sensor2_distance<20 and sensor1_distance<60:
+                elif sensor2_distance<20 and sensor1_distance<50:#60:
                         return 3
-                elif sensor2_distance>50 and sensor1_distance>70:
+                elif sensor2_distance>50 and sensor1_distance>75:#0:
                         return 0
                 else:
                         return 2
@@ -48,7 +48,7 @@ def get_new_state(state, sensor1_difference,sensor1_distance, sensor2_distance, 
                         #elif sensor1_difference < -10:
                                 return 3
         	elif state == 3:
-                        if sensor1_difference < 8 and sensor2_distance < 20:
+                        if sensor1_difference < 18 and sensor2_distance < 20:
                                 return 3
                         elif sensor2_distance>20 and sensor1_difference<18:
                                 return 1
