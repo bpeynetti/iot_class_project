@@ -76,15 +76,21 @@ def send_data(l):
 
 newState = 0 
 def restart_fsm(initalize):
-    global newState
-    newState = int(raw_input())
-    if (newState<0):
-        print "FINISHING!"
-    while (newState>3):
-        print "WRONG STATE TRY AGAIN"
-        newState = int(raw_input())
-    global initialize
-    initialize = True
+
+    while 1:
+        # start = time.time()
+        time.sleep(10)
+        initialize = True
+        # while (time.time() - start < 15):
+    # global newState
+    # newState = int(raw_input())
+    # if (newState<0):
+    #     print "FINISHING!"
+    # while (newState>3):
+    #     print "WRONG STATE TRY AGAIN"
+    #     newState = int(raw_input())
+    # global initialize
+    # initialize = True
 
 
 
@@ -96,7 +102,7 @@ def get_data(time_interval, percentage_outliers):
     now = int(start)
     measurements = []
     measurements2 = []
-    while (now - start < time_interval):
+    while ((now - start < time_interval) or len(measurements)<2 or len(measurements2)<2): 
         #print now-start
         now = int(time.time())
         time.sleep(.01)
